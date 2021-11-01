@@ -43,8 +43,29 @@
 
 # 2. 기능 구현   
 
-## 눈 영역 검출
+* 아이트래킹은 다음과 같은 순서로 진행된다.   
+openCV -> 눈 영역 검출 -> 시선추적 -> 모션 인식 -> 문자 추출 -> 사용자   
+   
+## 눈 영역 검출   
 
+환자의 시선을 추적하기 위해 openCV를 사용하였다. 웹캠을 통해 얼굴을 인식한 후 눈 영역을 검출하게 된다. 이후 시선 추적을 통해 환자가 키보드의 어느 글자를 응시하거나 깜빡이는지를 판별하여 문자를 추출하게 된다. 눈 영역 검출은 DLIB68 안면 랜드마크 예측 알고리즘을 사용하여 68개의 점을 얼굴에 나타내고 눈에 해당되는 인덱스를 가져와 검출한다. 검출 이후 임계값 지정, 외곽 검출 등을 거쳐 흰자와 검은자를 구별한다.   
+
+<pre><code>
+def eyes_contour_points(facial_landmarks):
+    left_eye = []
+    right_eye = []
+    for n in range(36, 42):
+        x = facial_landmarks.part(n).x
+        y = facial_landmarks.part(n).y
+        left_eye.append([x, y])
+    for n in range(42, 48):
+        x = facial_landmarks.part(n).x
+        y = facial_landmarks.part(n).y
+        right_eye.append([x, y])
+    left_eye = np.array(left_eye, np.int32)
+    right_eye = np.array(right_eye, np.int32)
+    return left_eye, right_eye
+</code></pre>
 ## 시선추적, 모션인식
 
 ##  자모 결합
