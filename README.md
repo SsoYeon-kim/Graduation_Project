@@ -49,8 +49,7 @@ openCV -> 눈 영역 검출 -> 시선추적 -> 모션 인식 -> 문자 추출 ->
 ## 눈 영역 검출   
 
 환자의 시선을 추적하기 위해 openCV를 사용하였다. 웹캠을 통해 얼굴을 인식한 후 눈 영역을 검출하게 된다. 이후 시선 추적을 통해 환자가 키보드의 어느 글자를 응시하거나 깜빡이는지를 판별하여 문자를 추출하게 된다. 눈 영역 검출은 DLIB68 안면 랜드마크 예측 알고리즘을 사용하여 68개의 점을 얼굴에 나타내고 눈에 해당되는 인덱스를 가져와 검출한다.    
-<img src="https://user-images.githubusercontent.com/62587484/139681170-6d68cae6-7e56-4238-9bf5-38ff9980e6b8.png" width="35%">    
-검출 이후 임계값 지정, 외곽 검출 등을 거쳐 흰자와 검은자를 구별한다.   
+<img src="https://user-images.githubusercontent.com/62587484/139681170-6d68cae6-7e56-4238-9bf5-38ff9980e6b8.png" width="35%">       
 
 <pre><code>
 def eyes_contour_points(facial_landmarks):
@@ -68,18 +67,84 @@ def eyes_contour_points(facial_landmarks):
     right_eye = np.array(right_eye, np.int32)
     return left_eye, right_eye
 </code></pre>
-## 시선추적, 모션인식
+   
+## 시선추적, 모션인식   
+   
+검출 이후 임계값 지정, 외곽 검출 등을 거쳐 흰자와 검은자를 구별한다. 좌, 우 응시를 판별하기 위해 흰자의 비율을 사용한다.
+<pre><code>
+def get_gaze_ratio(eye_points, facial_landmarks):
+    left_eye_region = np.array([(facial_landmarks.part(eye_points[0]).x, facial_landmarks.part(eye_points[0]).y),
+                                (facial_landmarks.part(eye_points[1]).x, facial_landmarks.part(eye_points[1]).y),
+                                (facial_landmarks.part(eye_points[2]).x, facial_landmarks.part(eye_points[2]).y),
+                                (facial_landmarks.part(eye_points[3]).x, facial_landmarks.part(eye_points[3]).y),
+                                (facial_landmarks.part(eye_points[4]).x, facial_landmarks.part(eye_points[4]).y),
+                                (facial_landmarks.part(eye_points[5]).x, facial_landmarks.part(eye_points[5]).y)], np.int32)
+    # cv2.polylines(frame, [left_eye_region], True, (0, 0, 255), 2)
 
-##  자모 결합
+    height, width, _ = frame.shape
+    mask = np.zeros((height, width), np.uint8)
+    cv2.polylines(mask, [left_eye_region], True, 255, 2)
+    cv2.fillPoly(mask, [left_eye_region], 255)
+    eye = cv2.bitwise_and(gray, gray, mask=mask)
 
-## 화면 구성
+    min_x = np.min(left_eye_region[:, 0])
+    max_x = np.max(left_eye_region[:, 0])
+    min_y = np.min(left_eye_region[:, 1])
+    max_y = np.max(left_eye_region[:, 1])
 
-## Glow-TTS
+    gray_eye = eye[min_y: max_y, min_x: max_x]
+    _, threshold_eye = cv2.threshold(gray_eye, 70, 255, cv2.THRESH_BINARY)
+    height, width = threshold_eye.shape
+    left_side_threshold = threshold_eye[0: height, 0: int(width / 2)]
+    left_side_white = cv2.countNonZero(left_side_threshold)
 
-## Multi-band MelGAN
+    right_side_threshold = threshold_eye[0: height, int(width / 2): width]
+    right_side_white = cv2.countNonZero(right_side_threshold)
 
-## 음성 결과
+    if left_side_white == 0:
+        gaze_ratio = 1
+    elif right_side_white == 0:
+        gaze_ratio = 5
+    else:
+        gaze_ratio = left_side_white / right_side_white
+    return gaze_ratio
+</code></pre>
+상, 하 시선을 구분하기 위해서는 위를 볼 때 눈커풀이 열리고 아래를 볼 때 눈꺼풀이 닫히는 특징을 이용한다. 눈 위치의 점 인덱스 중 눈 위 중앙과 아래 중앙의 거리를 계산하여 일정 비율 이상일 시 위를 응시, 이하일 시 아래를 응시하는 것으로 판별한다.
+<pre><code>
+def get_EyeTopDownLooking(eye_points, facial_landmarks):
+    center_top = midpoint(facial_landmarks.part(eye_points[0]), facial_landmarks.part(eye_points[1]))
+    center_bottom = midpoint(facial_landmarks.part(eye_points[2]), facial_landmarks.part(eye_points[3]))
 
-# 3. 동작 영상
+    return hypot((center_top[0] - center_bottom[0]), (center_top[1] - center_bottom[1]))
+</code></pre>
+깜빡임은 눈의 수직, 수평 비율로 판별한다. 상하를 판별할 때 사용한 수직길이와 눈의 수평길이를 계산하여 두 길이의 비율을 사용한다.
+<pre><code>
+def get_blinking_ratio(eye_points, facial_landmarks):
+    left_point = (facial_landmarks.part(eye_points[0]).x, facial_landmarks.part(eye_points[0]).y)
+    right_point = (facial_landmarks.part(eye_points[3]).x, facial_landmarks.part(eye_points[3]).y)
+    center_top = midpoint(facial_landmarks.part(eye_points[1]), facial_landmarks.part(eye_points[2]))
+    center_bottom = midpoint(facial_landmarks.part(eye_points[5]), facial_landmarks.part(eye_points[4]))
+
+    hor_line_lenght = hypot((left_point[0] - right_point[0]), (left_point[1] - right_point[1]))
+    ver_line_lenght = hypot((center_top[0] - center_bottom[0]), (center_top[1] - center_bottom[1]))
+
+    ratio = hor_line_lenght / ver_line_lenght
+    return ratio
+</code></pre>
+##  자모 결합   
+      
+영어의 경우 자음과 모음의 구분이 없어 글자를 결합하지 않는다. 하지만 한글의 경우 초성, 중성, 종성으로 이루어져 눈으로 글자를 입력할 시 모든 글자가 각각 입력되는 문제가 생긴다. 따라서 자음자와 모음자를 합쳐 음절 단위로 모아쓰게 하였으며 한글의 특성에 맞춰 키보드를 제작하였다.   
+다음은 자모 결합을 할 때 진행 순서이다.   
+첫 번째 글자는 자음을 선택하고 중성에는 무조건 모음이 들어가며 종성에서는 받침의 유무로 판단해 받침이 있다면 자음을 선택하고 모아쓰기를 하고 받침이 없다면 다음 단어의 초성을 선택한다. 그 후 각각 선택한 단어들을 리스트를 생성해 append시켜주고 리스트의 음소들을 하나의 문자열로 만들어준다.
+
+## 화면 구성   
+
+## Glow-TTS   
+
+## Multi-band MelGAN   
+
+## 음성 결과   
+
+# 3. 동작 영상   
 
 
