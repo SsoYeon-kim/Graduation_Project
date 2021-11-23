@@ -137,7 +137,20 @@ def get_blinking_ratio(eye_points, facial_landmarks):
 다음은 자모 결합을 할 때 진행 순서이다.   
 첫 번째 글자는 자음을 선택하고 중성에는 무조건 모음이 들어가며 종성에서는 받침의 유무로 판단해 받침이 있다면 자음을 선택하고 모아쓰기를 하고 받침이 없다면 다음 단어의 초성을 선택한다. 그 후 각각 선택한 단어들을 리스트를 생성해 append시켜주고 리스트의 음소들을 하나의 문자열로 만들어준다.
 
+<pre><code>
+    #출력창에 한글 출력(자모결합)
+    eye_list = list()
+    eye_list.append(text)
+    result = join_jamos(''.join(eye_list))
+    b.lineEE.setText(result)
+</code></pre>
+   
+..이 외 관련 코드는 unicode.py파일과 시선추적 코드를 참고..
+
 ## 화면 구성   
+화면 구성은 다음 사진과 같다.   
+<img src="https://user-images.githubusercontent.com/62587484/142987225-116fb076-d959-463a-9ed9-5d517f7c26ca.png" width="45%">    
+<img src="https://user-images.githubusercontent.com/62587484/142987342-61baec91-548e-4708-aa90-801e889324b9.png" width="45%">    
 
 ## Glow-TTS   
 
