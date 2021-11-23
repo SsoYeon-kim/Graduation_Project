@@ -177,11 +177,13 @@ Sequence to Sequence 모델로 Glow-TTS, Vocoder 모델로 Multi-band MelGAN을 
 ## Glow-TTS   
    
 Glow-TTS는 기존에 많이 사용하던 타코트론2보다 15.7배 빠르게 mel-spectrogram을 만들 수 있다. 이는 흐름 및 동적 프로그래밍의 속성을 활용하여 텍스트와 음성을 정렬하는 방법을 내부적으로 학습하는 독립형 병렬 TTS모델이다. 
+   
 [Glow-TTS](https://proceedings.neurips.cc/paper/2020/file/5c3b99e8f92532e5ad1556e53ceea00c-Paper.pdf)
    
 ## Multi-band MelGAN   
    
 Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다. 수용 영역을 확장하여 음성 생성에 도움이 되며 더 빠른 파형 생성과 고품질로 음성을 생성하게 된다.
+   
 [Multi-band melGAN](https://arxiv.org/pdf/2005.05106.pdf)
 ## 음성 결과   
 
