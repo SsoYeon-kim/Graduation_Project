@@ -197,5 +197,6 @@ Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다.
 이 외에도 녹음에 참여한 A(표준어 사용), B(사투리 사용)의 억양을 살려 음성 학습이 가능하였고, 물음표와 점의 구분 또한 가능하였다. 
    
 # 3. 동작 영상   
-
-
+   
+<img src="https://user-images.githubusercontent.com/62587484/142992372-29943948-4b72-41ac-9111-806e598a85e1.gif" width="50%">  
+<img src="https://user-images.githubusercontent.com/62587484/142992540-16795b3a-ce7e-4271-967d-49561759770a.gif" width="50%">  
