@@ -185,7 +185,16 @@ Glow-TTS는 기존에 많이 사용하던 타코트론2보다 15.7배 빠르게 
 Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다. 수용 영역을 확장하여 음성 생성에 도움이 되며 더 빠른 파형 생성과 고품질로 음성을 생성하게 된다.
    
 [Multi-band melGAN](https://arxiv.org/pdf/2005.05106.pdf)
+
 ## 음성 결과   
+   
+음성 데이터는 두 명이 직접 녹음에 참여하였고 약 3000개 이상의 문장으로 3시간 가량의 음성 데이터를 사용한다. 원본 음성 파형과 생성된 음성 파형을 비교했을 때 다음과 같은 결과를 보여준다.   
+   
+<img src="https://user-images.githubusercontent.com/62587484/142990475-6a595167-e224-4544-b951-8fe2d628d10f.png" width="50%">  
+<img src="https://user-images.githubusercontent.com/62587484/142990514-7a9fc8a2-5ceb-4dd9-8057-3fd994403db6.png" width="50%">  
+<img src="https://user-images.githubusercontent.com/62587484/142990552-e868027f-80be-4e23-ade5-95e4c46a317b.png" width="50%">  
+   
+
 
 # 3. 동작 영상   
 
