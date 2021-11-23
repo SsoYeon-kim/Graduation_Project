@@ -185,6 +185,26 @@ Glow-TTS는 기존에 많이 사용하던 타코트론2보다 15.7배 빠르게 
 Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다. 수용 영역을 확장하여 음성 생성에 도움이 되며 더 빠른 파형 생성과 고품질로 음성을 생성하게 된다.
    
 [Multi-band melGAN](https://arxiv.org/pdf/2005.05106.pdf)
+   
+      
+Docker Desktop과 TTS Server를 사용하여 다음의 코드로 TTS를 test해볼 수 있다.
+   
+<pre><code>
+text = '○○○ tts입니다. 오늘은 20○○년 ○월 ○일 ○시 ○분 입니다.'
+URL = f'http://localhost:5000/tts-server/api/infer-glowtts?text={requests.utils.quote(text)}'
+response = requests.get(URL)
+with open('input.wav', 'wb') as fd:
+  for chunk in response.iter_content(chunk_size=128):
+    fd.write(chunk)
+
+samplerate, data = wavfile.read('input.wav')
+data = data*32767
+wavfile.write('convert.wav', samplerate, data.astype(np.int16))
+
+wave_obj = sa.WaveObject.from_wave_file('convert.wav')
+play_obj = wave_obj.play()
+play_obj.wait_done()
+</code></pre>
 
 ## 음성 결과   
    
