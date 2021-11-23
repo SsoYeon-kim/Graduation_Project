@@ -149,7 +149,7 @@ def get_blinking_ratio(eye_points, facial_landmarks):
 
 ## 화면 구성   
 화면 구성은 다음 사진과 같다.   
-<img src="https://user-images.githubusercontent.com/62587484/142987225-116fb076-d959-463a-9ed9-5d517f7c26ca.png" width="45%"><img src="https://user-images.githubusercontent.com/62587484/142987342-61baec91-548e-4708-aa90-801e889324b9.png" width="45%">    
+<img src="https://user-images.githubusercontent.com/62587484/142987507-15a05d5f-7cc7-474f-8178-2ff5305f41ed.png" width="45%"><img src="https://user-images.githubusercontent.com/62587484/142987579-87a82149-0c03-477b-b978-9740e083a6fb.png" width=505%">    
 
 ## Glow-TTS   
 
