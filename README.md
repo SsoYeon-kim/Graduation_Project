@@ -15,9 +15,10 @@
 2-4.  구성   
 
 #### [개인화 TTS]   
-2-5. Glow-TTS   
-2-6. Multi-band MelGAN   
-2-7. 음성 결과   
+2-5. 구성도
+2-6. Glow-TTS   
+2-7. Multi-band MelGAN   
+2-8. 음성 결과   
 
 ## 3. 동작 영상   
 
@@ -147,7 +148,7 @@ def get_blinking_ratio(eye_points, facial_landmarks):
    
 ..이 외 관련 코드는 unicode.py파일과 시선추적 코드를 참고..
 
-##  구성   
+##  키보드 구성   
    
 다음은 기존 윈도우 키보드의 사진이다.   
 <img src="https://user-images.githubusercontent.com/62587484/142987745-5d6dc06a-5ad8-4097-bb1a-43264b2880db.png" width="45%">   
@@ -163,11 +164,25 @@ def get_blinking_ratio(eye_points, facial_landmarks):
 위 사진은 자동완성 페이지로 환자가 글자를 입력하는 시간을 단축해준다. 일상생활에서 자주 사용하는 네, 아니요, 아파요 등 한 번의 클릭으로 간편하게 입력할 수 있다. 자동완성 페이지와 자동완성 단어를 선택하는 페이지로 구성된다.   
 따라서 직관적이고 누구나 쉽게 사용 가능하며 한국어에 맞추어 편리성을 확보한 키보드를 구성하였다.   
 
+## 구성도   
+   
+TTS는 미리 녹음된 육성을 이용하는 음성 서비스와 달리 문자를 바로 음성으로 변환시켜주는 음성 합성 기술을 뜻한다. 사전에 미리 정해진 문장을 녹음하여 재생하는 것이 아닌 환자가 하고 싶은 말을 환자의 목소리로 만들어내는 것이다. 음성합성을 위해 end to end시스템을 사용하는데 이는 입력부터 출력까지 하나의 모듈로 이루어진 시스템으로 텍스트와 음성과 같이 쌍에 해당하는 데이터를 가지고 텍스트 문자열은 입력으로 음성 신호를 출력으로 하는 심층 신경망 모델에 대한 학습을 자동으로 해내게 된다. 
+
+다음은 개인화 TTS 구성도이다.   
+   
+<img src="https://user-images.githubusercontent.com/62587484/142988684-ee5b8778-5e45-4671-b444-19e7210d8d43.png" width="50%">  
+   
+Sequence to Sequence 모델로 Glow-TTS, Vocoder 모델로 Multi-band MelGAN을 사용한다. 입력한 텍스는 Glow-TTS를 거쳐 Mel-Spectrogram으로 만들어지고 이는 Multi-band melGAN을 거쳐 음성으로 만들어지게 된다. 
 
 ## Glow-TTS   
-
+   
+Glow-TTS는 기존에 많이 사용하던 타코트론2보다 15.7배 빠르게 mel-spectrogram을 만들 수 있다. 이는 흐름 및 동적 프로그래밍의 속성을 활용하여 텍스트와 음성을 정렬하는 방법을 내부적으로 학습하는 독립형 병렬 TTS모델이다. 
+[Glow-TTS](https://proceedings.neurips.cc/paper/2020/file/5c3b99e8f92532e5ad1556e53ceea00c-Paper.pdf)
+   
 ## Multi-band MelGAN   
-
+   
+Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다. 수용 영역을 확장하여 음성 생성에 도움이 되며 더 빠른 파형 생성과 고품질로 음성을 생성하게 된다.
+[Multi-band melGAN](https://arxiv.org/pdf/2005.05106.pdf)
 ## 음성 결과   
 
 # 3. 동작 영상   
