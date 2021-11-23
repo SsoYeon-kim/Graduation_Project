@@ -198,5 +198,8 @@ Multi-band melGAN은 melGAN을 개선한 것으로 다중대역을 사용한다.
    
 # 3. 동작 영상   
    
+다음은 감사합니다를 입력하는 시연영상이다.   
 <img src="https://user-images.githubusercontent.com/62587484/142992372-29943948-4b72-41ac-9111-806e598a85e1.gif" width="50%">  
-<img src="https://user-images.githubusercontent.com/62587484/142992540-16795b3a-ce7e-4271-967d-49561759770a.gif" width="50%">  
+   
+다음은 자동완성 페이지 시연영상이다. 
+<img src="https://user-images.githubusercontent.com/62587484/142992661-adcb4a80-b2af-4eb9-a646-310a04cced76.gif" width="50%">  
