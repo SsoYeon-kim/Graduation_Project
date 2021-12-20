@@ -218,10 +218,7 @@ play_obj.wait_done()
    
 # 3. 동작 영상   
    
-다음은 감사합니다를 입력하는 시연영상이다.   
+다음은 "감사합니다" 입력, 자동완성 페이지 시연영상이다.   
    
-<img src="https://user-images.githubusercontent.com/62587484/143851062-dd4a48a4-9741-47c3-a75b-90a32e246757.gif" width="50%">  
-   
-다음은 자동완성 페이지 시연영상이다.   
-   
-<img src="https://user-images.githubusercontent.com/62587484/143851069-df6d8699-d4e3-4b33-b1be-32526c5711a2.gif" width="50%">  
+<img src="https://user-images.githubusercontent.com/62587484/143851062-dd4a48a4-9741-47c3-a75b-90a32e246757.gif" width="55%">
+<img src="https://user-images.githubusercontent.com/62587484/143851069-df6d8699-d4e3-4b33-b1be-32526c5711a2.gif" width="55%">  
