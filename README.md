@@ -173,7 +173,7 @@ TTS는 미리 녹음된 육성을 이용하는 음성 서비스와 달리 문자
    
 <img src="https://user-images.githubusercontent.com/62587484/142988684-ee5b8778-5e45-4671-b444-19e7210d8d43.png" width="50%">  
    
-Sequence to Sequence 모델로 Glow-TTS, Vocoder 모델로 Multi-band MelGAN을 사용한다. 입력한 텍스는 Glow-TTS를 거쳐 Mel-Spectrogram으로 만들어지고 이는 Multi-band melGAN을 거쳐 음성으로 만들어지게 된다. 
+Text2Mel 모델로 Glow-TTS, Vocoder 모델로 Multi-band MelGAN을 사용한다. 입력한 텍스는 Glow-TTS를 거쳐 Mel-Spectrogram으로 만들어지고 이는 Multi-band melGAN을 거쳐 음성으로 만들어지게 된다. 
 
 ## Glow-TTS   
    
