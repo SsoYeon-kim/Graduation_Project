@@ -211,7 +211,7 @@ play_obj.wait_done()
 음성 데이터는 두 명이 직접 녹음에 참여하였고(Mimic Recording Studio) 약 3000개 이상의 문장으로 3시간 가량의 음성 데이터를 사용한다. 원본 음성 파형과 생성된 음성 파형을 비교했을 때 다음과 같은 결과를 보여준다.   
    
 <img src="https://user-images.githubusercontent.com/62587484/142990475-6a595167-e224-4544-b951-8fe2d628d10f.png" width="50%">   
-<img src="https://user-images.githubusercontent.com/62587484/142990514-7a9fc8a2-5ceb-4dd9-8057-3fd994403db6.png" width="40%"><img src="https://user-images.githubusercontent.com/62587484/142990552-e868027f-80be-4e23-ade5-95e4c46a317b.png" width="50%">  
+<img src="https://user-images.githubusercontent.com/62587484/142990514-7a9fc8a2-5ceb-4dd9-8057-3fd994403db6.png" width="50%"><img src="https://user-images.githubusercontent.com/62587484/142990552-e868027f-80be-4e23-ade5-95e4c46a317b.png" width="50%">  
    
 이 외에도 녹음에 참여한 A(표준어 사용), B(사투리 사용)의 억양을 살려 음성 학습이 가능하였고, 물음표와 점의 구분 또한 가능하였다. 
    
